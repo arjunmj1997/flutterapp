@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertest/apiservices/apiconnection.dart';
+import 'package:fluttertest/models/legendmodel.dart';
 
 
 
@@ -15,62 +18,93 @@ class LegendPage extends StatefulWidget {
 
 class _LegendPageState extends State<LegendPage> {
   //Map map={};
-  var map;
-  List listres=[];
+  Map<String, dynamic>? map;
+  List<LegendModel>? listres = [];
+
   @override
-  void initState() {
+void initState()  {
     // TODO: implement initState
     super.initState();
-    dataGet();
-  }
-  dataGet()async{
-    //Map dmap= await ApiConnection().getlegendData();
-    setState(() async {
-     // map=dmap;
-      map=await ApiConnection().getlegendData();
-    });
-    return map;
-  }
-  Widget build(BuildContext context) {
-    return Text(map.toString());
 
-              }
+     // listres =  await ApiConnection().getlegendData() ;
+
+dataGet();
+
+  }
+
+   dataGet() async {
+    //Map dmap= await ApiConnection().getlegendData();
+    listres = await ApiConnection().getlegendData();
+
+    return listres;
+  }
+
+  Widget build(BuildContext context) {
+      return ListView.builder(
+        itemCount: listres!.length,
+        itemBuilder: (context,index) {
+          return Text(listres![index].content.toString());
+        }
+          );
+        }
+
+                }
 
     // return FutureBuilder(
-    //   future:ApiConnection().getlegendData(),
-    //     builder:( context,snapshot){
-    //     if(snapshot.hasData){
-    //       return ListView.builder(
-    //         itemCount:snapshot.data!.length,
-    //           itemBuilder:(context,index){
-    //           return  ListTile(
-    //             leading: CircleAvatar(
-    //               backgroundColor: Colors.grey,
-    //             ),
-    //             title:Text(snapshot.data![index]['content'])
+    //     future: ApiConnection().getlegendData(),
+    //     builder: (context, snapshot) {
+    //         if (snapshot.hasData) {
+    //           return ListView.builder(
+    //               itemCount: snapshot.data!.length,
+    //               itemBuilder: (context, index) {
+    //                 return ListTile(
+    //                     leading: CircleAvatar(
+    //                       backgroundColor: Colors.grey,
+    //                     ),
+    //                     title: Text(
+    //                         snapshot.data![index].content.toString().trim())
+    //                 );
+    //               }
     //           );
+    //         }
+    //
+    //      else if (snapshot.hasError) {
+    //       return const Text("Something went wrong");
     //       }
-    //       );
-    //     }else if(snapshot.hasError){
-    //      return const Text("Something went wrong");
-    //     }
-    //     else{
+    //       else {
     //       return const CircularProgressIndicator();
-    //     }
+    //       }
     //     }
     // );
-    // return Text(
-    //   map['content'].toString()
+    // return FutureBuilder(
+    //     future: ApiConnection().getlegendData(),
+    //     builder: (context, snapshot) {
+    // try{
+    // if (snapshot.hasData) {
+    // return ListView.builder(
+    // itemCount: snapshot.data!.length,
+    // itemBuilder: (context, index) {
+    // return ListTile(
+    // leading: CircleAvatar(
+    // backgroundColor: Colors.grey,
+    // ),
+    // title: Text(
+    // snapshot.data![index].content.toString().trim())
     // );
-      // child:ListView.builder(
-      //   itemCount: listres.length,
-      //     itemBuilder:(context,index){
-      //       return Center(child: Text(listres[index]));
-      //     }
-      // )
+    // }
+    // );
+    // }else{
+    //   return CircularProgressIndicator();
+    // }
+    // }catch(e){
+    //   print(e.toString());
+    // }
+    //
+    // }
+    //
+    //
+    //
+    // );
+  //}
 
-
-
-
-  }
-
+//}

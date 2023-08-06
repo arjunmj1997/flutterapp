@@ -16,15 +16,7 @@ class _LegendviewPageState extends State<LegendviewPage> {
     return Container(
         height:MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              AppContainer(width:MediaQuery.of(context).size.width, height:90, color:Colors.blue),
-              FilterWidget(),
-              LegendPage()
-            ],
-          ),
-        )
+        child: LegendPage()
 
     );
   }

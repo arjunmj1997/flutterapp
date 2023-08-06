@@ -19,10 +19,13 @@ class _CharacterListState extends State<CharacterList> {
     // TODO: implement initState
     super.initState();
    dataGet();
+
+
   }
   dataGet()async{
     Map<String, dynamic>? dmap= await ApiConnection().getData();
-    setState(() {
+    setState(()  {
+
       map=dmap;
       listres=map!['characters'];
     });
@@ -58,7 +61,6 @@ class _CharacterListState extends State<CharacterList> {
             child: ListView.builder(
               itemCount:listres.length,
                 itemBuilder:(context,index){
-                print(listres.length);
                 return  ListTile(
                   leading:AvatarGlow(
                     glowColor: Colors.blue,

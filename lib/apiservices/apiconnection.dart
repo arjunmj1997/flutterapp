@@ -4,6 +4,7 @@ import 'dart:convert';
 
 
 import 'package:fluttertest/models/charactermodel.dart';
+import 'package:fluttertest/models/charmodel2.dart';
 import 'package:fluttertest/models/legendmodel.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart'as http;
@@ -51,25 +52,29 @@ class ApiConnection {
       Fluttertoast.showToast(msg: "Error while fetching data");
     }
   }
-  Future getlegendData() async {
-
+  Future<List<LegendModel>?> getlegendData() async {
+    List<LegendModel> data=[];
+    try{
       var response = await http.get(Uri.parse("https://saltucreativesuite.com/api/flutter/programming/test-1/legend "));
       if (response.statusCode == 200) {
         //var jsons=response.body;
 
-       Map datas=json.decode(response.body);
-       //data=datas.map((e)=>CharModel.fromJson(e)).toList();
-      // return data;
-       final results=datas['content'] ;
-       //final transform=results.map((e) => LegendModel.fromJson(e)).toList();
-       return results;
-              }else{
-           throw Exception("Error");
+        List datas = json.decode(response.body);
+        data = datas.map((e) => LegendModel.fromJson(e)).toList();
+        // return data;
+        //final results=datas['content'] ;
+        //final transform=results.map((e) => LegendModel.fromJson(e)).toList();
+        return data;
       }
+    }catch(e) {
+      print(e.toString());
+
+    }
+    }
 
 
 
-  }
+
   Future<Map> getaboutData() async {
 
       var response = await http.get(Uri.parse("https://saltucreativesuite.com/api/flutter/programming/test-1/about  "));
